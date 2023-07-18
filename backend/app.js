@@ -20,12 +20,14 @@ app.use('/api/v1/auth', authRoutes);
 const item= require("./routes/itemRoute");
 
 const category = require("./routes/categoryRoute")
+const material = require("./routes/materialRoute")
 
 
 
 app.use("/api/v1",item);
 
 app.use("/api/v1",category);
+app.use("/api/v1",material);
 
 
 
