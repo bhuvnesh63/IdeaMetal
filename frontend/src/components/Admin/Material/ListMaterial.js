@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Container, Row, Table } from 'react-bootstrap'
-import { AiFillDashboard, AiFillEye } from 'react-icons/ai';
-import { Link } from "react-router-dom"
-import { IoIosCreate } from "react-icons/io";
-import Header from '../../Header/Header'
+import { Container, Col, Row, Table, Button } from 'react-bootstrap'
+import { AiFillDashboard, AiFillDelete } from 'react-icons/ai';
+import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
+import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// import { toast } from 'react-toastify';
+import Header from '../../Header/Header';
 
-const baseURL = "http://localhost:4000/api/v1/items"
 
-const ItemList = () => {
 
+const baseURL = " http://localhost:4000/api/v1/materials"
+const ListMaterial = () => {
+
+    //   List Function Start
     const [get, setGetAll] = useState(null);
 
     useEffect(() => {
         axios.get(baseURL).then((response) => {
             setGetAll(response.data);
-            // console.log(response)
+            console.log(response)
         })
     }, [get])
 
     const deleteData = (id) => {
-        axios.delete(`http://localhost:4000/api/v1/item/${id}`).then(response => {
-            //   toast.success("Item deleted Succesfully")
+        // console.log(id)
+        axios.delete(`http://localhost:4000/api/v1/material/${id}`).then(response => {
+            // toast.success("Category deleted Succesfully")
         })
             .catch(error => {
                 console.log(error)
@@ -30,16 +36,15 @@ const ItemList = () => {
     }
     if (!get) return null;
 
-
-
     return (
         <>
+
             <Header />
-            <Container className='main-col'  >
+            <Container style={{ width: "90%", marginTop: "20px" }} >
                 <Table striped bordered hover className='main-table'>
                     <thead>
                         <tr>
-                            <th><h5><AiFillDashboard /> &nbsp; Dashboard/ Item-Details</h5></th>
+                            <th><h5><AiFillDashboard /> &nbsp;Dasboard / Material List</h5></th>
                         </tr>
                     </thead>
                 </Table>
@@ -48,13 +53,10 @@ const ItemList = () => {
                         <thead>
                             <tr>
                                 <th>
-                                    <div className='table-div' >
+                                    <div className='table-div'>
 
                                         <Button className='table-btn' variant="light" >
-                                            <IoIosCreate />&nbsp;<Link to="/items">Create</Link>
-                                        </Button>
-                                        <Button className='table-btn' variant="light" >
-                                            <AiFillEye />&nbsp;<Link to="/seeallcategory">See-All-Items</Link>
+                                            <IoIosCreate />&nbsp;<Link to="/material">Go Back</Link>
                                         </Button>
                                     </div>
                                 </th>
@@ -64,64 +66,44 @@ const ItemList = () => {
                     <hr />
                 </Row>
             </Container>
-            {/* Table Table Table */}
 
             <div className='form-div'>
-
-                <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Item-Details</h5>
+                <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Category-Details</h5>
                 <Container>
                     <Row>
-
-
                         <Table responsive>
                             <table class="table table-bordered border-secondary">
                                 <thead>
                                     <tr>
-
-                                        <th>Item Name</th>
-                                        <th>Item Img</th>
-                                        <th>Description  </th>
-                                        <th>Category</th>
-                                        <th>Material</th>
-
+                                        <th>Material Name</th>
                                         <th>Action Edit</th>
                                         <th>Action Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {get?.items?.map((items) => (
+                                    {get?.materials?.map((items) => (
                                         <tr>
-                                            <td>{items.Item_Name}</td>
+                                            <td>{items.materialType}</td>
                                             <td>
-                                                <div className='item-img'>
-                                                    {/* <img src={} /> */}
-                                                </div>
-                                            </td>
-                                            <td>{items.description}</td>
-                                            <td>{items.Category_Name}</td>
-                                            <td>{items.material_Name}</td>
-                                            <td>
-
-                                                <Link to={`/edititem/${items._id}`}>
+                                                <Link to={`/Edit-material/${items._id}`}>
                                                     <Button className='table-btn'
+
                                                         variant="light" >
                                                         &#9998;Edit
                                                     </Button>
                                                 </Link>
                                             </td>
-
                                             <td>
-                                                <Button
+                                                <Button className='table-btn'
                                                     variant="light"
-                                                    onClick={(e) => { deleteData(items._id) }}
-                                                    value={"Delete"}
-
+                                                    onClick={(e) => { deleteData(items._id) }} value={"Delete"}
                                                 >
                                                     <span className='delete-icon'>&#x2717;</span>Delete
                                                 </Button>
                                             </td>
                                         </tr>
                                     ))}
+
                                 </tbody>
                             </table>
                         </Table>
@@ -130,8 +112,11 @@ const ItemList = () => {
 
             </div>
 
+
+
+
         </>
     )
 }
 
-export default ItemList
+export default ListMaterial

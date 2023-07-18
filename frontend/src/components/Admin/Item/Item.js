@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row, Table, Button } from 'react-bootstrap';
-import { AiFillDashboard} from 'react-icons/ai';
+import { AiFillDashboard } from 'react-icons/ai';
 import { IoIosCreate } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Header from '../../Header/Header'
@@ -8,40 +8,52 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './item.css'
 
-const baseURL = "http://localhost:4000/api/v1/items";
+const baseURL = "http://localhost:4000/api/v1/categories";
+const materialURL = "http://localhost:4000/api/v1/materials";
 
 
 const Item = () => {
     const [get, setGetAll] = useState(null);
+    const [getmaterial, setGetmaterial] = useState(null);
     const [item_Name, setItem_Name] = useState("");
-    const [description, setdescription] = useState("");
+    const [description, setDescription] = useState("");
     const [category_Type, setCategory_Type] = useState(null);
+    const [materialType, setMaterialType] = useState(null)
+
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get(baseURL).then((response) => {
-          setGetAll(response.data);
+        axios.get(materialURL).then((response) => {
+            setGetmaterial(response.data);
+            console.log(response.data,"pooja")
         });
-      }, []);
-      const submitForm = async (event) => {
+    }, []);
+
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+            setGetAll(response.data);
+            console.log(response.data,"saloni")
+        });
+    }, []);
+    
+    const submitForm = async (event) => {
         event.preventDefault();
         try {
-          await axios.post("http://localhost:4000/api/v1/item/new", {
-            "Item_Name": item_Name,
-            "price": price,
-            "Category_Name":category_Type,
-          });
-        //toast.success("Item Add Successfully");
-          navigate("/item-list");
-        //   setItem_Name("");
-        //   setPrice("");
-        //   setCategory_Type(null);
+            await axios.post("http://localhost:4000/api/v1/item/new", {
+                "Item_Name": item_Name,
+                "description": description,
+                "Category_Name":category_Type,
+                "material_Name":materialType,
+
+            });
+            //toast.success("Item Add Successfully");
+            navigate("/item-list");
         } catch (error) {
-          console.log(error.response);
+            console.log(error.response);
         }
-      };
-        
-  
+    };
+
+
     return (
         <>
             <Header />
@@ -84,7 +96,8 @@ const Item = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-
+                                    value={item_Name}
+                                    onChange={(e) => setItem_Name(e.target.value)}
                                     required
                                 />
                             </div>
@@ -103,7 +116,8 @@ const Item = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
                                     required
                                 />
                             </div>
@@ -112,12 +126,15 @@ const Item = () => {
                                 <label className="label">Material Name</label>
                                 <select
                                     className="form-control"
+                                    value={materialType}
+                                    onChange={(e) => setMaterialType(e.target.value)}
                                 >
                                     <option value="">Select a Material</option>
-                                    <option value="">Silver</option>
-                                    <option value="">Copper</option>
-                                    <option value="">Brass</option>
-                                    <option value="">Mattel</option>
+                                    {getmaterial?.materials?.map((items) => (
+                                        <option key={items._id} value={items.materialType}>
+                                            {items.materialType}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -125,12 +142,15 @@ const Item = () => {
                                 <label className="label">Category Name</label>
                                 <select
                                     className="form-control"
+                                    value={category_Type}
+                                    onChange={(e) => setCategory_Type(e.target.value)}
                                 >
                                     <option value="">Select a category</option>
-                                    <option value="">MUG</option>
-                                    <option value="">Jug</option>
-                                    <option value="">Tub</option>
-                                    <option value="">Gilas</option>
+                                    {get?.categories?.map((items) => (
+                                        <option key={items._id} value={items.Category_Type}>
+                                            {items.Category_Type}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -139,7 +159,7 @@ const Item = () => {
                                     className="stu_btn"
                                     variant="success"
                                     type="submit"
-
+                                    onClick={(event) => submitForm(event)}
                                 >
                                     Submit
                                 </Button>
