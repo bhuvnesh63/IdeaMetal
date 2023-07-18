@@ -25,7 +25,7 @@ const itemSchema = new mongoose.Schema({
         type: String,
 
     },
-    Material: {
+    material: {
         type: String,
 
     },
