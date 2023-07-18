@@ -4,18 +4,18 @@ const User = require('../models/user');
 
 // Signup controller
 exports.signup = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, username, password } = req.body;
 
   try {
     // Check if user already exists
-    const existingUser = await User.findOne({ username });
+    const existingUser = await User.findOne({ email });
 
     if (existingUser) {
       return res.status(409).json({ error: 'Username already exists' });
     }
 
     // Create a new user
-    const newUser = new User({ username });
+    const newUser = new User({ email });
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -26,7 +26,7 @@ exports.signup = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: savedUser._id, username: savedUser.username },
+      { userId: savedUser._id, email: savedUser.email },
       'your-secret-key'
     );
 
