@@ -1,14 +1,93 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import Header from '../../Header/Header'
+import { Container, Col, Row, Table, Button, Form } from 'react-bootstrap';
+import { AiFillDashboard } from 'react-icons/ai';
+import './signup.css'
+import axios from 'axios';
 
 const Signup = () => {
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+
+
+  const submitform = (event) => {
+    event.preventDefault();
+    try {
+      axios.post("http://localhost:4000/api/v1/auth/signup", {
+        "username": username,
+        "password": password,
+    
+      })
+  
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+  console.log("saloni")
   return (
-<>
+    <>
 
-<Header />
+      <Header />
+      <Container style={{ width: "90%", marginTop: "20px" }}>
+        <Table striped bordered hover className='main-table'>
+          <thead>
+            <tr>
+              <th><h5><AiFillDashboard /> &nbsp;Dasboard / Signup</h5></th>
+            </tr>
+          </thead>
+        </Table>
+      </Container>
 
 
-</>
+
+      <div className='form-divs' >
+        <Container>
+          <Row>
+            <Col sm={12}>
+              <div className='signup-form'>
+                <Form>
+
+                  <Form.Group className="mb-5" controlId="formBasicEmail">
+                    <Form.Control
+                      className='inputs-feilds'
+                      type="text" placeholder="Enter Name"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </Form.Group>
+
+
+            
+                  <Form.Group className="mb-5" controlId="formBasicPassword">
+                    <Form.Control
+                      className='inputs-feilds'
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <center>
+                    <Button
+                      variant="success"
+                      type="submit"
+                      onClick={(event) => submitform(event)}
+                    >
+                      Submit
+                    </Button>
+                  </center>
+
+
+                </Form>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+
+
+    </>
   )
 }
 
