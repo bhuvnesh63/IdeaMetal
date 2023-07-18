@@ -1,11 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Container, Row, Table } from 'react-bootstrap'
 import { AiFillDashboard, AiFillEye } from 'react-icons/ai';
 import { Link } from "react-router-dom"
 import { IoIosCreate } from "react-icons/io";
 import Header from '../../Header/Header'
+import axios from 'axios';
+
+const baseURL = "http://localhost:4000/api/v1/items"
 
 const ItemList = () => {
+
+    const [get, setGetAll] = useState(null);
+
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+            setGetAll(response.data);
+            // console.log(response)
+        })
+    }, [get])
+
+    const deleteData = (id) => {
+        axios.delete(`http://localhost:4000/api/v1/item/${id}`).then(response => {
+            //   toast.success("Item deleted Succesfully")
+        })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+    if (!get) return null;
+
+
+
     return (
         <>
             <Header />
@@ -55,34 +81,47 @@ const ItemList = () => {
                                         <th>Item Name</th>
                                         <th>Item Img</th>
                                         <th>Description  </th>
-                                        <th>Material</th>
                                         <th>Category</th>
+                                        <th>Material</th>
+
                                         <th>Action Edit</th>
                                         <th>Action Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Mug</td>
-                                        <td>
-                                            <div className='item-img'>
-                                                {/* <img src={} /> */}
-                                            </div>
-                                        </td>
-                                        <td>Mug</td>
-                                        <td>Mug</td>
-                                        <td>Mug</td>
-                                        <td>
-                                            <Button variant='light'> &#9998;Edit</Button>
-                                        </td>
+                                    {get?.items?.map((items) => (
+                                        <tr>
+                                            <td>{items.Item_Name}</td>
+                                            <td>
+                                                <div className='item-img'>
+                                                    {/* <img src={} /> */}
+                                                </div>
+                                            </td>
+                                            <td>{items.description}</td>
+                                            <td>{items.Category_Name}</td>
+                                            <td>{items.material_Name}</td>
+                                            <td>
 
-                                        <td>
-                                            <Button variant='light'>
-                                            <span className='delete-icon'>&#x2717;</span>Delete
-                                            </Button>
-                                        </td>
-                                    </tr>
+                                                <Link to={`/edititem/${items._id}`}>
+                                                    <Button className='table-btn'
+                                                        variant="light" >
+                                                        &#9998;Edit
+                                                    </Button>
+                                                </Link>
+                                            </td>
 
+                                            <td>
+                                                <Button
+                                                    variant="light"
+                                                    onClick={(e) => { deleteData(items._id) }}
+                                                    value={"Delete"}
+
+                                                >
+                                                    <span className='delete-icon'>&#x2717;</span>Delete
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </Table>

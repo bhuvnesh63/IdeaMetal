@@ -8,6 +8,7 @@ import Material from './components/Admin/Material/Material'
 import Signup from './components/Admin/Signup/Signup'
 import ItemList from './components/Admin/Item/ItemList'
 import CategoryList from './components/Admin/Category/CategoryList'
+import EditItem from './components/Admin/Item/EditItem'
 
 
 
@@ -19,6 +20,7 @@ const App = () => {
     <Route path="/dashboard" element={<Sidebar><Dashboard/> </Sidebar>}/>
     <Route path="/items" element={<Sidebar><Item/></Sidebar> } />
     <Route path="/item-list" element={<Sidebar><ItemList/></Sidebar> } />
+    <Route path="/edititem/:id" element={<Sidebar><EditItem/></Sidebar> } />
     <Route path="/category" element={<Sidebar><Category/></Sidebar>}/>
     <Route path="/category-list" element={<Sidebar><CategoryList/></Sidebar>}/>
     <Route path="/material" element={<Sidebar><Material/></Sidebar>}/>
