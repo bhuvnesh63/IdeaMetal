@@ -1,47 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Col, Row, Table, Button } from 'react-bootstrap';
-import { AiFillDashboard} from 'react-icons/ai';
+import { AiFillDashboard, AiFillDelete, AiFillEdit, AiFillSetting } from 'react-icons/ai';
+import { RiArrowGoBackLine } from 'react-icons/ri';
+import Form from 'react-bootstrap/Form';
 import { IoIosCreate } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Header from '../../Header/Header'
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import './item.css'
 
-const baseURL = "http://localhost:4000/api/v1/items";
-
-
-const Item = () => {
-    const [get, setGetAll] = useState(null);
-    const [item_Name, setItem_Name] = useState("");
-    const [description, setdescription] = useState("");
-    const [category_Type, setCategory_Type] = useState(null);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        axios.get(baseURL).then((response) => {
-          setGetAll(response.data);
-        });
-      }, []);
-      const submitForm = async (event) => {
-        event.preventDefault();
-        try {
-          await axios.post("http://localhost:4000/api/v1/item/new", {
-            "Item_Name": item_Name,
-            "price": price,
-            "Category_Name":category_Type,
-          });
-        //toast.success("Item Add Successfully");
-          navigate("/item-list");
-        //   setItem_Name("");
-        //   setPrice("");
-        //   setCategory_Type(null);
-        } catch (error) {
-          console.log(error.response);
-        }
-      };
-        
-  
+const EditItem = () => {
     return (
         <>
             <Header />
@@ -50,7 +17,7 @@ const Item = () => {
                 <Table striped bordered hover className='main-table'>
                     <thead>
                         <tr>
-                            <th><h5><AiFillDashboard /> &nbsp;Dasboard / Add New Item</h5></th>
+                            <th><h5><AiFillDashboard /> &nbsp;Dasboard / Edit Items</h5></th>
                         </tr>
                     </thead>
                 </Table>
@@ -152,4 +119,4 @@ const Item = () => {
     )
 }
 
-export default Item
+export default EditItem
