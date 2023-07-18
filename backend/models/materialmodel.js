@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ModelSchema = new mongoose.Schema({
-    materialType: {
+    MaterialType: {
         type: String,
     },
    

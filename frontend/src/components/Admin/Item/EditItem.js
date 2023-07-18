@@ -1,18 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Col, Row, Table, Button } from 'react-bootstrap';
-import { AiFillDashboard, AiFillDelete, AiFillEdit, AiFillSetting } from 'react-icons/ai';
-import { RiArrowGoBackLine } from 'react-icons/ri';
-import Form from 'react-bootstrap/Form';
+import { AiFillDashboard } from 'react-icons/ai';
 import { IoIosCreate } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Header from '../../Header/Header'
 import './item.css'
+import axios from 'axios';
+const baseURL = "http://localhost:4000/api/v1/categories";
+const materialURL = "http://localhost:4000/api/v1/materials";
 
 const EditItem = () => {
+
+
+    const params = useParams();
+    const navigate = useNavigate();
+    const [specificItem, setSpecificItem] = useState("");
+    const [get, setGetAll] = useState(null);
+    const [getmaterial, setGetmaterial] = useState(null);
+    const [Item_Name, setItem_Name] = useState(specificItem.Item_Name);
+    const [description, setDescription] = useState("");
+    const [Category_Name, setCategory_Name] = useState(specificItem.Category_Name);
+    const [category_Type, setCategory_Type] = useState(null)
+    const [materialType, setMaterialType] = useState(null)
+    const [material_Name, setMaterial_Name] = useState(specificItem.material_Name);
+
+
+
+    useEffect(() => {
+        axios.get(materialURL).then((response) => {
+            setGetmaterial(response.data);
+            console.log(response.data, "pooja")
+        });
+    }, []);
+
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+            setGetAll(response.data);
+            console.log(response.data, "saloni")
+        });
+    }, []);
+
+
+    useEffect(() => {
+        axios.get(`http://localhost:4000/api/v1/item/${params.id}`).then((response) => {
+            setSpecificItem(response.data);
+            setItem_Name(response.data.item.Item_Name);
+            setDescription(response.data.item.description);
+            setCategory_Name(response.data.item.Category_Name);
+            setMaterial_Name(response.data.item.material_Name);
+
+        })
+    }, [])
+
+
+    const submitform = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post("http://localhost:4000/api/v1/item/new", {
+                "Item_Name": Item_Name,
+                "description": description,
+                "Category_Name": category_Type,
+                "material_Name": materialType,
+
+            });
+            //toast.success("Item Add Successfully");
+            navigate("/item-list");
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
+
     return (
+
         <>
             <Header />
-
             <Container style={{ width: "90%", marginTop: "20px" }}>
                 <Table striped bordered hover className='main-table'>
                     <thead>
@@ -51,7 +113,8 @@ const EditItem = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-
+                                    value={Item_Name}
+                                    onChange={(e) => setItem_Name(e.target.value)}
                                     required
                                 />
                             </div>
@@ -70,7 +133,8 @@ const EditItem = () => {
                                 <input
                                     type="text"
                                     className="form-control"
-
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
                                     required
                                 />
                             </div>
@@ -79,12 +143,15 @@ const EditItem = () => {
                                 <label className="label">Material Name</label>
                                 <select
                                     className="form-control"
+                                    value={materialType}
+                                    onChange={(e) => setMaterialType(e.target.value)}
                                 >
                                     <option value="">Select a Material</option>
-                                    <option value="">Silver</option>
-                                    <option value="">Copper</option>
-                                    <option value="">Brass</option>
-                                    <option value="">Mattel</option>
+                                    {getmaterial?.materials?.map((items) => (
+                                        <option key={items._id} value={items.materialType}>
+                                            {items.materialType}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -92,12 +159,14 @@ const EditItem = () => {
                                 <label className="label">Category Name</label>
                                 <select
                                     className="form-control"
+                                    onChange={(e) => setCategory_Type(e.target.value)}
                                 >
-                                    <option value="">Select a category</option>
-                                    <option value="">MUG</option>
-                                    <option value="">Jug</option>
-                                    <option value="">Tub</option>
-                                    <option value="">Gilas</option>
+                                    <option  value={category_Type}>Select a category</option>
+                                    {get?.categories?.map((items) => (
+                                        <option key={items._id} value={items.Category_Type}>
+                                            {items.Category_Type}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -106,9 +175,10 @@ const EditItem = () => {
                                     className="stu_btn"
                                     variant="success"
                                     type="submit"
+                                    onClick={(event) => submitform(event)}
 
                                 >
-                                    Submit
+                                    Update Item
                                 </Button>
                             </center>
                         </form>

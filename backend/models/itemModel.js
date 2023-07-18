@@ -9,23 +9,23 @@ const itemSchema = new mongoose.Schema({
         type: String,
     },
 
-    images: [
-        {
-            public_id: {
-                type: String,
+    // images: [
+    //     {
+    //         public_id: {
+    //             type: String,
 
-            },
-            url: {
-                type: String,
+    //         },
+    //         url: {
+    //             type: String,
 
-            }
-        }
-    ],
+    //         }
+    //     }
+    // ],
     Category_Name: {
         type: String,
 
     },
-    material: {
+    material_Name: {
         type: String,
 
     },
