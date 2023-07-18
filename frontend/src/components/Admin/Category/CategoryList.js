@@ -3,15 +3,42 @@ import { Container, Col, Row, Table, Button } from 'react-bootstrap'
 import { AiFillDashboard, AiFillDelete } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
+import Layout from '../../Header/Layout';
+import axios from 'axios';
 
 
-
+const baseURL = " http://localhost:4000/api/v1/categories"
 
 const CategoryList = () => {
 
+    const [get, setGetAll] = useState(null);
+
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+            setGetAll(response.data);
+            // console.log(response)
+        })
+    }, [get])
+
+    const deleteData = (id) => {
+        // console.log(id)
+        axios.delete(`http://localhost:4000/api/v1/category/${id}`).then(response => {
+            // toast.success("Category deleted Succesfully")
+        })
+            .catch(error => {
+                console.log(error)
+            })
+
+    }
+    if (!get) return null;
+
 
   return (
+
  <>
+
+  <Layout />
+
   <Container style={{ width: "90%", marginTop: "20px" }} >
                 <Table striped bordered hover className='main-table'>
                     <thead>
@@ -53,12 +80,12 @@ const CategoryList = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {/* {get?.categories?.map((items) => ( */}
+                                    {get?.categories?.map((items) => (
                                         <tr>
-                                            {/* <td>{items.Category_Type}</td> */}
+                                            <td>{items.Category_Type}</td>
                                             <td>
                                                 <Link 
-                                                // to={`/Editcategory/${items._id}`}
+                                                to={`/EditCategory/${items._id}`}
                                                 >
                                                     <Button className='table-btn'
 
@@ -70,13 +97,13 @@ const CategoryList = () => {
                                             <td>
                                                 <Button className='table-btn'
                                                     variant="light"
-                                                    // onClick={(e) => { deleteData(items._id) }} value={"Delete"}
+                                                    onClick={(e) => { deleteData(items._id) }} value={"Delete"}
                                                 >
                                                     <span className='delete-icon'>&#x2717;</span>Delete
                                                 </Button>
                                             </td>
                                         </tr>
-                                  {/* ))} */}
+                                  ))} 
 
                                 </tbody>
                             </table>

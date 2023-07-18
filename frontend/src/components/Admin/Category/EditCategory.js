@@ -1,46 +1,47 @@
 import Header from '../../Header/Header'
 import React, { useState, useEffect } from 'react'
 import { Container, Col, Row, Table, Button, Toast } from 'react-bootstrap'
-import { AiFillDashboard,  } from 'react-icons/ai';
+import { AiFillDashboard, } from 'react-icons/ai';
 // import Form from 'react-bootstrap/Form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
+
+const EditCategory = () => {
+
+    const params = useParams();
+    const navigate = useNavigate();
+    const [specificItem, setSpecificItem] = useState("");
+    const [Category_Type, setCategory_Type] = useState("");
+
+    useEffect(() => {
+        axios.get(`http://localhost:4000/api/v1/category/${params.id}`).then((response) => {
+            setSpecificItem(response.data);
+            setCategory_Type(response.data.category.Category_Type);
+        });
+    }, []);
+
+
+    const submitForm = (event) => {
+        event.preventDefault();
+        try {
+            axios.put(`http://localhost:4000/api/v1/category/${params.id}`, {
+                Category_Type: Category_Type,
+            });
+            //   toast.success("Item Updated Successfully");
+            navigate("/category-list");
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
 
 
 
+    return (
+        <>
+            <Header />
 
-const Category = () => {
-
-
-
-  const navigate = useNavigate()
-  const [category_Type, setCategory_Type] = useState(null);
-  const submitform = (event) => {
-      event.preventDefault();
-      try {
-          axios.post(" http://localhost:4000/api/v1/category/new", {
-
-              "Category_Type": category_Type,
-          })
-          // toast.success("Item Add Succesfully")
-          navigate("/category-list")
-      } catch (error) {
-          console.log(error.response)
-
-      }
-  }
-
-
-
-
-  return (
-    <>
-    <Header />
-
-    <Container style={{ width: "90%", marginTop: "20px" }} >
+            <Container style={{ width: "90%", marginTop: "20px" }} >
                 <Table striped bordered hover className='main-table'>
                     <thead>
                         <tr>
@@ -75,29 +76,30 @@ const Category = () => {
                             <div class="col-md-4 position-relative">
                                 <label className="label">Category Name</label>
                                 <input type="text" class="form-control"
-                                    value={category_Type} onChange={(e) => setCategory_Type(e.target.value)} required
+                                    value={Category_Type}
+                                    onChange={(e) => setCategory_Type(e.target.value)}
+
                                 />
                             </div>
                             <br />
                             <center>
-                                <Button className="stu_btn"
+                                <Button
+                                    className="stu_btn"
                                     style={{ marginTop: "-120px" }}
                                     variant="success"
                                     type="submit"
-                                    // onClick={submitform}
-                                    onClick={(event) => submitform(event)}
+                                    onClick={(event) => submitForm(event)}
                                 >
-                                  Submit
-                               </Button>
+                                    Update Category
+                                </Button>
                             </center>
                         </form>
                     </Row>
                 </Container>
             </div>
 
-
-    </>
-  )
+        </>
+    )
 }
 
-export default Category
+export default EditCategory
