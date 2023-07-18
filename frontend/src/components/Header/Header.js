@@ -21,7 +21,7 @@ const Header = () => {
   }, []);
 
   const PrivateRoute = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to="/login" />;
+    return isLoggedIn ? children : <Navigate to="/" />;
   };
   
 
@@ -30,7 +30,7 @@ const Header = () => {
 
     // toast.success('You have been logged out successfully');
 
-    Navigate('/login');
+    Navigate('/');
   };
 
   return (

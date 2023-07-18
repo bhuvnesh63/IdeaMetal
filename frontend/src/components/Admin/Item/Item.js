@@ -88,8 +88,12 @@ const Item = () => {
                 <Container>
                     <Row>
                         <form className="row g-4 p-3 registration-form">
+                            {/* <Link to='/add-category'>
+                            <button variant="success"  >Add Category</button>
+                            </Link> */}
+                            
                             <Link to='/add-category'>
-                                <Button variant='success' className='float-end'>Add Category</Button>
+                                <button variant='success' className='float-end'>Add Category</button>
                             </Link>
                             <div className="col-md-4 position-relative">
                                 <label className="label">Item Name</label>
