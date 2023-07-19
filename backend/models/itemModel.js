@@ -10,18 +10,6 @@ const itemSchema = new mongoose.Schema({
         type: String,
     },
 
-    images: [
-        {
-            public_id: {
-                type: String,
-
-            },
-            url: {
-                type: String,
-
-            }
-        }
-    ],
     Category_Name: {
         type: String,
 
@@ -30,6 +18,10 @@ const itemSchema = new mongoose.Schema({
         type: String,
 
     },
+    image: {
+        data: Buffer,
+        contentType: String
+      },
 
 
 });

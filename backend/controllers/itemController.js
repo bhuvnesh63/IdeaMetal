@@ -8,7 +8,7 @@ const multer = require("multer");
 // create student --Admin
 exports.createItem = (async (req, res, next) => {
     const item = await Item.create(req.body);
-
+    console.log(item)
     res.status(201).json({
         success: true,
         item,
