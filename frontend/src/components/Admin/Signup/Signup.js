@@ -6,7 +6,7 @@ import './signup.css'
 import axios from 'axios';
 
 const Signup = () => {
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
 
 
@@ -14,7 +14,7 @@ const Signup = () => {
     event.preventDefault();
     try {
       axios.post("http://localhost:4000/api/v1/auth/signup", {
-        "username": username,
+        "email": email,
         "password": password,
     
       })
@@ -23,7 +23,7 @@ const Signup = () => {
       console.log(error.response)
     }
   }
-  console.log("saloni")
+  // console.log("saloni")
   return (
     <>
 
@@ -50,9 +50,9 @@ const Signup = () => {
                   <Form.Group className="mb-5" controlId="formBasicEmail">
                     <Form.Control
                       className='inputs-feilds'
-                      type="text" placeholder="Enter Name"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      type="email" placeholder="Enter Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </Form.Group>
 

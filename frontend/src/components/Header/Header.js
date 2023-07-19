@@ -41,11 +41,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mx-auto">
-            
-              <Link className="item-links" to="/hotel-dashboard">Hotel</Link>
-              <Link className="item-links" to="/restaurent-dashboard">Restaurant</Link>
-              <Link className="item-links" to="/main-admin-dashboard">Admin</Link>
-            </Nav>
+                      </Nav>
             {isLoggedIn ? (
               <Nav>
               

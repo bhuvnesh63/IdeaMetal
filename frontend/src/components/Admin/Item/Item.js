@@ -88,12 +88,9 @@ const Item = () => {
                 <Container>
                     <Row>
                         <form className="row g-4 p-3 registration-form">
-                            {/* <Link to='/add-category'>
-                            <button variant="success"  >Add Category</button>
-                            </Link> */}
                             
-                            <Link to='/add-category'>
-                                <button variant='success' className='float-end'>Add Category</button>
+                            <Link to='/category'>
+                                <Button variant='success' className='float-end'>Add Category</Button>
                             </Link>
                             <div className="col-md-4 position-relative">
                                 <label className="label">Item Name</label>
@@ -135,8 +132,8 @@ const Item = () => {
                                 >
                                     <option value="">Select a Material</option>
                                     {getmaterial?.materials?.map((items) => (
-                                        <option key={items._id} value={items.materialType}>
-                                            {items.materialType}
+                                        <option key={items._id} value={items.MaterialType}>
+                                            {items.MaterialType}
                                         </option>
                                     ))}
                                 </select>

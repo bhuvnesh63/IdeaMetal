@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 // Signup controller
 exports.signup = async (req, res) => {
-  const { email, username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
     // Check if user already exists
@@ -33,16 +33,17 @@ exports.signup = async (req, res) => {
     res.cookie('token', token, { httpOnly: true });
     res.status(201).json({ message: 'Signup successful' });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: 'Failed to create user' });
   }
 };
 
 // Login controller
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(401).json({ error: 'Authentication failed' });
@@ -56,7 +57,7 @@ exports.login = async (req, res) => {
 
     // Generate JWT token without expiration
     const token = jwt.sign(
-      { userId: user._id, username: user.username },
+      { userId: user._id, email: user.email },
       'your-secret-key'
     );
 

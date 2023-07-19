@@ -23,7 +23,7 @@ const EditCategory = () => {
     useEffect(() => {
         axios.get(`http://localhost:4000/api/v1/material/${params.id}`).then((response) => {
             setSpecificItem(response.data);
-            setMaterial_Type(response.data.material.materialType);
+            setMaterial_Type(response.data.material.MaterialType);
         });
     }, []);
 
@@ -32,7 +32,7 @@ const EditCategory = () => {
         event.preventDefault();
         try {
             axios.put(`http://localhost:4000/api/v1/material/${params.id}`, {
-                materialType: materialType,
+                MaterialType: materialType,
             });
             //   toast.success("Item Updated Successfully");
             //   navigate("/list-category");
