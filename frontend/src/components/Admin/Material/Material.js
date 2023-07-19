@@ -18,13 +18,13 @@ const Material = () => {
 
 
   const navigate = useNavigate()
-  const [material, setMaterial] = useState(null);
+  const [materialType, setMaterialType] = useState(null);
   const submitform = (event) => {
       event.preventDefault();
       try {
           axios.post(" http://localhost:4000/api/v1/material/new", {
 
-              "materialType": material,
+              "MaterialType": materialType,
           })
           // toast.success("Item Add Succesfully")
           navigate("/material-list")
@@ -73,7 +73,7 @@ const Material = () => {
                           <div class="col-md-4 position-relative">
                               <label className="label">Material Name</label>
                               <input type="text" class="form-control"
-                                  value={material} onChange={(e) => setMaterial(e.target.value)} required
+                                  value={materialType} onChange={(e) => setMaterialType(e.target.value)} required
                               />
                           </div>
                           <br />

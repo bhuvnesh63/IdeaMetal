@@ -148,8 +148,8 @@ const EditItem = () => {
                                 >
                                     <option value="">Select a Material</option>
                                     {getmaterial?.materials?.map((items) => (
-                                        <option key={items._id} value={items.materialType}>
-                                            {items.materialType}
+                                        <option key={items._id} value={items.MaterialType}>
+                                            {items.MaterialType}
                                         </option>
                                     ))}
                                 </select>

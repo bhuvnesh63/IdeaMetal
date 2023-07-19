@@ -83,7 +83,7 @@ const ListMaterial = () => {
                                 <tbody>
                                     {get?.materials?.map((items) => (
                                         <tr>
-                                            <td>{items.materialType}</td>
+                                            <td>{items.MaterialType}</td>
                                             <td>
                                                 <Link to={`/Edit-material/${items._id}`}>
                                                     <Button className='table-btn'
