@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Header from '../../Header/Header';
 
 
@@ -27,7 +27,7 @@ const ListMaterial = () => {
     const deleteData = (id) => {
         // console.log(id)
         axios.delete(`http://localhost:4000/api/v1/material/${id}`).then(response => {
-            // toast.success("Category deleted Succesfully")
+            toast.success("Material deleted Succesfully")
         })
             .catch(error => {
                 console.log(error)
@@ -68,7 +68,7 @@ const ListMaterial = () => {
             </Container>
 
             <div className='form-div'>
-                <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Category-Details</h5>
+                <h5 className="w3-center w3-flat-midnight-blue w3-padding-48 w3-border-blue-grey w3-grey text text-center mb-5 mt-3">Material-Details</h5>
                 <Container>
                     <Row>
                         <Table responsive>

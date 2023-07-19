@@ -7,15 +7,10 @@ import { Link } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
-
-
-
-
+import { toast } from 'react-toastify';
 
 
 const Material = () => {
-
 
   const navigate = useNavigate()
   const [materialType, setMaterialType] = useState(null);
@@ -26,7 +21,7 @@ const Material = () => {
 
               "MaterialType": materialType,
           })
-          // toast.success("Item Add Succesfully")
+          toast.success("Material Add Succesfully")
           navigate("/material-list")
       } catch (error) {
           console.log(error.response)

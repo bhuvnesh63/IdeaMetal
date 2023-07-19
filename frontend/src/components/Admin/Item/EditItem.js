@@ -6,7 +6,10 @@ import { IoIosCreate } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Header from '../../Header/Header'
 import './item.css'
+import { toast } from 'react-toastify';
 import axios from 'axios';
+
+
 const baseURL = "http://localhost:4000/api/v1/categories";
 const materialURL = "http://localhost:4000/api/v1/materials";
 
@@ -37,7 +40,7 @@ const EditItem = () => {
     useEffect(() => {
         axios.get(baseURL).then((response) => {
             setGetAll(response.data);
-            console.log(response.data, "saloni")
+           
         });
     }, []);
 
@@ -64,7 +67,7 @@ const EditItem = () => {
                 "material_Name": materialType,
 
             });
-            //toast.success("Item Add Successfully");
+            toast.success("Item Updated Successfully");
             navigate("/item-list");
         } catch (error) {
             console.log(error.response);
@@ -105,7 +108,7 @@ const EditItem = () => {
                 <Container>
                     <Row>
                         <form className="row g-4 p-3 registration-form">
-                            <Link to='/add-category'>
+                            <Link to='/category'>
                                 <Button variant='success' className='float-end'>Add Category</Button>
                             </Link>
                             <div className="col-md-4 position-relative">

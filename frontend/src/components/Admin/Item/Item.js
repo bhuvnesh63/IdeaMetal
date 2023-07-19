@@ -7,12 +7,16 @@ import Header from '../../Header/Header'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './item.css'
+import { toast } from 'react-toastify';
+
 
 const baseURL = "http://localhost:4000/api/v1/categories";
 const materialURL = "http://localhost:4000/api/v1/materials";
 
 
 const Item = () => {
+
+
     const [get, setGetAll] = useState(null);
     const [getmaterial, setGetmaterial] = useState(null);
     const [item_Name, setItem_Name] = useState("");
@@ -25,34 +29,31 @@ const Item = () => {
     useEffect(() => {
         axios.get(materialURL).then((response) => {
             setGetmaterial(response.data);
-            console.log(response.data,"pooja")
         });
     }, []);
 
     useEffect(() => {
         axios.get(baseURL).then((response) => {
             setGetAll(response.data);
-            console.log(response.data,"saloni")
         });
     }, []);
-    
+
     const submitForm = async (event) => {
         event.preventDefault();
         try {
             await axios.post("http://localhost:4000/api/v1/item/new", {
                 "Item_Name": item_Name,
                 "description": description,
-                "Category_Name":category_Type,
-                "material_Name":materialType,
+                "Category_Name": category_Type,
+                "material_Name": materialType,
 
             });
-            //toast.success("Item Add Successfully");
+            toast.success("Item Add Successfully");
             navigate("/item-list");
         } catch (error) {
             console.log(error.response);
         }
     };
-
 
     return (
         <>
@@ -88,7 +89,7 @@ const Item = () => {
                 <Container>
                     <Row>
                         <form className="row g-4 p-3 registration-form">
-                            
+
                             <Link to='/category'>
                                 <Button variant='success' className='float-end'>Add Category</Button>
                             </Link>
@@ -111,6 +112,8 @@ const Item = () => {
                                     required
                                 />
                             </div>
+
+                            
 
                             <div className="col-md-4 position-relative">
                                 <label className="label">Description</label>

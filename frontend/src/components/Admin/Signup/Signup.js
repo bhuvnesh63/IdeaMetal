@@ -4,11 +4,14 @@ import { Container, Col, Row, Table, Button, Form } from 'react-bootstrap';
 import { AiFillDashboard } from 'react-icons/ai';
 import './signup.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 
 const Signup = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-
+  const navigate = useNavigate();
 
   const submitform = (event) => {
     event.preventDefault();
@@ -16,9 +19,11 @@ const Signup = () => {
       axios.post("http://localhost:4000/api/v1/auth/signup", {
         "email": email,
         "password": password,
-    
+
       })
-  
+      toast.success("User Add Succesfully")
+ 
+      navigate("/dashboard")
     } catch (error) {
       console.log(error.response)
     }
@@ -57,7 +62,7 @@ const Signup = () => {
                   </Form.Group>
 
 
-            
+
                   <Form.Group className="mb-5" controlId="formBasicPassword">
                     <Form.Control
                       className='inputs-feilds'

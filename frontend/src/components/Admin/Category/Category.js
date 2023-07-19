@@ -1,13 +1,11 @@
 import Header from '../../Header/Header'
-import React, { useState, useEffect } from 'react'
-import { Container, Col, Row, Table, Button, Toast } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Container, Row, Table, Button } from 'react-bootstrap'
 import { AiFillDashboard,  } from 'react-icons/ai';
-// import Form from 'react-bootstrap/Form';
 import { Link, useNavigate } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
-// import { useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 
 
@@ -25,7 +23,7 @@ const Category = () => {
 
               "Category_Type": category_Type,
           })
-          // toast.success("Item Add Succesfully")
+          toast.success("Category Add Succesfully")
           navigate("/category-list")
       } catch (error) {
           console.log(error.response)
