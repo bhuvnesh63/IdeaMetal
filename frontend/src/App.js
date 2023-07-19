@@ -13,8 +13,8 @@ import EditItem from './components/Admin/Item/EditItem'
 import ListMaterial from './components/Admin/Material/ListMaterial'
 import EditCategory from './components/Admin/Category/EditCategory'
 import Login from './login/Login'
-
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
@@ -26,16 +26,17 @@ const App = () => {
   }, []);
 
   const PrivateRoute = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to="/" />;
+    return isLoggedIn ? children : <Navigate to="#" />;
   };
 
 
 
   return (
     <>
+      <ToastContainer position="top-center" />
     <Routes>
        
-    <Route path="/" element={<Navigate to="/" />} />
+    {/* <Route path="/" element={<Navigate to="/" />} /> */}
     <Route path="/admin" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
     <Route path="/dashboard" element={<PrivateRoute><Sidebar><Dashboard/> </Sidebar></PrivateRoute>}/>
 

@@ -1,12 +1,11 @@
 import Header from '../../Header/Header'
 import React, { useState, useEffect } from 'react'
-import { Container, Col, Row, Table, Button, Toast } from 'react-bootstrap'
+import { Container, Row, Table, Button, } from 'react-bootstrap'
 import { AiFillDashboard, } from 'react-icons/ai';
-// import Form from 'react-bootstrap/Form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 const EditCategory = () => {
 
     const params = useParams();
@@ -28,7 +27,7 @@ const EditCategory = () => {
             axios.put(`http://localhost:4000/api/v1/category/${params.id}`, {
                 Category_Type: Category_Type,
             });
-            //   toast.success("Item Updated Successfully");
+              toast.success("Category Updated Successfully");
             navigate("/category-list");
         } catch (error) {
             console.log(error.response);

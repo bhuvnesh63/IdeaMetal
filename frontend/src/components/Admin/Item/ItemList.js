@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { IoIosCreate } from "react-icons/io";
 import Header from '../../Header/Header'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const baseURL = "http://localhost:4000/api/v1/items"
 
@@ -21,7 +22,7 @@ const ItemList = () => {
 
     const deleteData = (id) => {
         axios.delete(`http://localhost:4000/api/v1/item/${id}`).then(response => {
-            //   toast.success("Item deleted Succesfully")
+            toast.success("Item deleted Succesfully")
         })
             .catch(error => {
                 console.log(error)

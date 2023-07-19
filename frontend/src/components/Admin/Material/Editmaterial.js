@@ -4,7 +4,7 @@ import { AiFillDashboard } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import axios from 'axios';
-// import { toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../Header/Header';
 // import Layout from '../../../Header/Layout';
@@ -34,8 +34,7 @@ const EditCategory = () => {
             axios.put(`http://localhost:4000/api/v1/material/${params.id}`, {
                 MaterialType: materialType,
             });
-            //   toast.success("Item Updated Successfully");
-            //   navigate("/list-category");
+              toast.success("Material Updated Successfully");
         } catch (error) {
             console.log(error.response);
         }

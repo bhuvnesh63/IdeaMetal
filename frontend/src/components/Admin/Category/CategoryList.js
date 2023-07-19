@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { IoIosCreate } from 'react-icons/io';
 import Layout from '../../Header/Layout';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 
 const baseURL = " http://localhost:4000/api/v1/categories"
 
@@ -23,7 +23,7 @@ const CategoryList = () => {
     const deleteData = (id) => {
         // console.log(id)
         axios.delete(`http://localhost:4000/api/v1/category/${id}`).then(response => {
-            // toast.success("Category deleted Succesfully")
+            toast.success("Category deleted Succesfully")
         })
             .catch(error => {
                 console.log(error)

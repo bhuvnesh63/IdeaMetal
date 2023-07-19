@@ -58,6 +58,9 @@ const Login = ({ setIsLoggedIn }) => {
           <div className='form-wrapper sign-in'>
             <form onSubmit={handleSubmit}>
             <div className='logo-container'>
+              <h1 className='idea-logo'>
+                Ideas Matel
+              </h1>
                 {/* <img src={Logo} alt='Logo' className='login-logo' /> */}
               </div>
               <h2>Login</h2>
