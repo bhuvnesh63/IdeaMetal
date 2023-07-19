@@ -4,7 +4,7 @@ import './login.css';
 import Logo from './logo.png'
 
 const Login = ({ setIsLoggedIn }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const Login = ({ setIsLoggedIn }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -64,8 +64,8 @@ const Login = ({ setIsLoggedIn }) => {
               <div className='input-group'>
                 <input
                   type='text'
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder='Username'
                   required
                 />
