@@ -40,13 +40,13 @@ const Item = () => {
         });
     }, []);
 
-    const handleFileChange = (e) => {
-        const img = {
-          preview: URL.createObjectURL(e.target.files[0]),
-          data: e.target.files[0],
-        }
-        setImage(img)
-      }
+    // const handleFileChange = (e) => {
+    //     const img = {
+    //       preview: URL.createObjectURL(e.target.files[0]),
+    //       data: e.target.files[0],
+    //     }
+    //     setImage(img)
+    //   }
 
     const submitForm = async (event) => {
         event.preventDefault();
@@ -56,8 +56,6 @@ const Item = () => {
             "description": description,
             "Category_Name": category_Type,
             "material_Name": materialType,
-            "image":image.data,
-            // "img":image.data.name
 
         }
         console.log(payload,'deep')
@@ -124,10 +122,9 @@ const Item = () => {
                                 <label className="label">Item Image</label>
                                 <input
                                     name='image'
-                                    // value={image}
+                                    value={image}
                                     type="file"
                                     className="form-control"
-                                    onChange={handleFileChange}
                                     required
                                 />
                             </div>

@@ -6,14 +6,34 @@ const multer = require("multer");
 
 
 // create student --Admin
+
+
 exports.createItem = (async (req, res, next) => {
+    req.body.image=req.file.filename
     const item = await Item.create(req.body);
-    console.log(item)
+
+    console.log(req.body)
     res.status(201).json({
         success: true,
         item,
     });
 });
+
+// exports.createItem = async (req, res) => {
+//     try {
+//         ({
+//             Item_Name: req.body.Item_Name,
+//             description: req.body.description,
+//             Category_Name: req.body.Category_Name,
+//             material_Name: req.body.material_Name,
+//             image: req.file.filename,
+
+//         }
+//         )
+//     } catch (error) {
+//         res.status(400).send(error.message)
+//     }
+// }
 
 
 exports.getAllitems = async (req, res) => {

@@ -19,8 +19,7 @@ const itemSchema = new mongoose.Schema({
 
     },
     image: {
-        data: Buffer,
-        contentType: String
+        type:String
       },
 
 

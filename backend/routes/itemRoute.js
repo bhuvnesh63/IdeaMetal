@@ -1,14 +1,46 @@
 const express = require("express");
-const { getAllitems, createItem , updateitem,deleteItem, getItemDetail} = require("../controllers/itemController");
+const bodyParser = require("body-parser");
+const { getAllitems, createItem, updateitem, deleteItem, getItemDetail } = require("../controllers/itemController");
+
+const multer = require("multer")
+// const router=express.Router();
+const path = require("path");
+const { isNull } = require("util");
+const item_route = express();
 
 
-const router=express.Router();
- 
+item_route.use(bodyParser.json());
+item_route.use(bodyParser.urlencoded({ extended: true }));
+
 //making routes
 // for all students record
-router.route("/items").get(getAllitems);
-router.route("/item/new").post(createItem);
-router.route("/item/:id").put(updateitem).delete(deleteItem).get(getItemDetail);
+
+item_route.use(express.static('public'));
 
 
-module.exports= router
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../public/images'), function (error, success) {
+            if (error) throw error
+        })
+    },
+    filename: function (req, file, cb) {
+        Date.now() + '-' + file.originalname;
+        cb(null, file.originalname, function (error, success) {
+            if (error) throw error
+        })
+    }
+})
+
+const upload = multer({ storage: storage })
+item_route.post('/item/new', upload.single("image"), createItem)
+
+item_route.get("/items", getAllitems);
+// router.route("/item/new").post(createItem,upload.single("image"));
+item_route.get("/item/:id", getItemDetail)
+
+item_route.put("/item/:id", updateitem)
+item_route.delete("/item/:id", deleteItem);
+
+
+module.exports = item_route
