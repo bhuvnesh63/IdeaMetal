@@ -20,6 +20,7 @@ const Item = () => {
     const [get, setGetAll] = useState(null);
     const [getmaterial, setGetmaterial] = useState(null);
     const [item_Name, setItem_Name] = useState("");
+    const [image, setImage] = useState("");
     const [description, setDescription] = useState("");
     const [category_Type, setCategory_Type] = useState(null);
     const [materialType, setMaterialType] = useState(null)
@@ -35,21 +36,35 @@ const Item = () => {
     useEffect(() => {
         axios.get(baseURL).then((response) => {
             setGetAll(response.data);
+            // console.log(response.data, "saloni")
         });
     }, []);
 
+    // const handleFileChange = (e) => {
+    //     const img = {
+    //       preview: URL.createObjectURL(e.target.files[0]),
+    //       data: e.target.files[0],
+    //     }
+    //     setImage(img)
+    //   }
+
     const submitForm = async (event) => {
         event.preventDefault();
-        try {
-            await axios.post("http://localhost:4000/api/v1/item/new", {
-                "Item_Name": item_Name,
-                "description": description,
-                "Category_Name": category_Type,
-                "material_Name": materialType,
 
-            });
-            toast.success("Item Add Successfully");
-            navigate("/item-list");
+        const payload={
+            "Item_Name": item_Name,
+            "description": description,
+            "Category_Name": category_Type,
+            "material_Name": materialType,
+
+        }
+        console.log(payload,'deep')
+        try {
+            await axios.post("http://localhost:4000/api/v1/item/new",payload );
+
+
+            //toast.success("Item Add Successfully");
+            // navigate("/item-list");
         } catch (error) {
             console.log(error.response);
         }
@@ -88,7 +103,7 @@ const Item = () => {
             <div className='form-div'>
                 <Container>
                     <Row>
-                        <form className="row g-4 p-3 registration-form">
+                        <form className="row g-4 p-3 registration-form" enctype="multipart/form-data">
 
                             <Link to='/category'>
                                 <Button variant='success' className='float-end'>Add Category</Button>
@@ -106,9 +121,10 @@ const Item = () => {
                             <div className="col-md-4 position-relative">
                                 <label className="label">Item Image</label>
                                 <input
+                                    name='image'
+                                    value={image}
                                     type="file"
                                     className="form-control"
-
                                     required
                                 />
                             </div>
