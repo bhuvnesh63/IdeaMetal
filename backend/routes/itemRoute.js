@@ -3,9 +3,9 @@ const bodyParser = require("body-parser");
 const { getAllitems, createItem, updateitem, deleteItem, getItemDetail } = require("../controllers/itemController");
 
 const multer = require("multer")
+// const upload = multer({ }); 
 // const router=express.Router();
 const path = require("path");
-const { isNull } = require("util");
 const item_route = express();
 
 
@@ -32,11 +32,11 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage: storage  })
 item_route.post('/item/new', upload.single("image"), createItem)
 
 item_route.get("/items", getAllitems);
-// router.route("/item/new").post(createItem,upload.single("image"));
+// router.route("/item/new").post(createItem, upload.single("image"));
 item_route.get("/item/:id", getItemDetail)
 
 item_route.put("/item/:id", updateitem)

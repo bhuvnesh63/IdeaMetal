@@ -10,8 +10,8 @@ import './item.css'
 import { toast } from 'react-toastify';
 
 
-const baseURL = "http://localhost:4000/api/v1/categories";
-const materialURL = "http://localhost:4000/api/v1/materials";
+const baseURL = "http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/categories";
+const materialURL = "http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/materials";
 
 
 const Item = () => {
@@ -20,7 +20,7 @@ const Item = () => {
     const [get, setGetAll] = useState(null);
     const [getmaterial, setGetmaterial] = useState(null);
     const [item_Name, setItem_Name] = useState("");
-    const [image, setImage] = useState("");
+    const [file, setFile] = useState(null);
     const [description, setDescription] = useState("");
     const [category_Type, setCategory_Type] = useState(null);
     const [materialType, setMaterialType] = useState(null)
@@ -40,35 +40,31 @@ const Item = () => {
         });
     }, []);
 
-    // const handleFileChange = (e) => {
-    //     const img = {
-    //       preview: URL.createObjectURL(e.target.files[0]),
-    //       data: e.target.files[0],
-    //     }
-    //     setImage(img)
-    //   }
-
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+      };
+      
     const submitForm = async (event) => {
         event.preventDefault();
 
-        const payload={
-            "Item_Name": item_Name,
-            "description": description,
-            "Category_Name": category_Type,
-            "material_Name": materialType,
+        const formData = new FormData();
+        formData.append("Item_Name", item_Name);
+        formData.append("description", description);
+        formData.append("Category_Name", category_Type);
+        formData.append("material_Name", materialType);
+        formData.append("image", file); 
 
-        }
-        console.log(payload,'deep')
         try {
-            await axios.post("http://localhost:4000/api/v1/item/new",payload );
+            await axios.post("http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/item/new", formData);
 
-
-            //toast.success("Item Add Successfully");
-            // navigate("/item-list");
+            toast.success("Item Add Successfully");
+            navigate("/item-list");
         } catch (error) {
             console.log(error.response);
         }
     };
+
 
     return (
         <>
@@ -122,14 +118,12 @@ const Item = () => {
                                 <label className="label">Item Image</label>
                                 <input
                                     name='image'
-                                    value={image}
                                     type="file"
                                     className="form-control"
+                                    onChange={handleFileChange}
                                     required
                                 />
                             </div>
-
-                            
 
                             <div className="col-md-4 position-relative">
                                 <label className="label">Description</label>

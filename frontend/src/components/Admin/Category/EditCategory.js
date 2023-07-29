@@ -14,7 +14,7 @@ const EditCategory = () => {
     const [Category_Type, setCategory_Type] = useState("");
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/v1/category/${params.id}`).then((response) => {
+        axios.get(`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/category/${params.id}`).then((response) => {
             setSpecificItem(response.data);
             setCategory_Type(response.data.category.Category_Type);
         });
@@ -24,7 +24,7 @@ const EditCategory = () => {
     const submitForm = (event) => {
         event.preventDefault();
         try {
-            axios.put(`http://localhost:4000/api/v1/category/${params.id}`, {
+            axios.put(`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/category/${params.id}`, {
                 Category_Type: Category_Type,
             });
               toast.success("Category Updated Successfully");

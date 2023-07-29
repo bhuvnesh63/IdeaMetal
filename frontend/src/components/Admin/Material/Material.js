@@ -17,7 +17,7 @@ const Material = () => {
   const submitform = (event) => {
       event.preventDefault();
       try {
-          axios.post(" http://localhost:4000/api/v1/material/new", {
+          axios.post("http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/material/new", {
 
               "MaterialType": materialType,
           })

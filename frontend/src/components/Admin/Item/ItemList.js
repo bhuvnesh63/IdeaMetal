@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Container, Row, Table } from 'react-bootstrap'
 import { AiFillDashboard, AiFillEye } from 'react-icons/ai';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import './item.css'
 import { IoIosCreate } from "react-icons/io";
 import Header from '../../Header/Header'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const baseURL = "http://localhost:4000/api/v1/items"
+const baseURL = "http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/items"
 
 const ItemList = () => {
 
@@ -18,10 +19,10 @@ const ItemList = () => {
             setGetAll(response.data);
             // console.log(response)
         })
-    }, [get])
+    }, [])
 
     const deleteData = (id) => {
-        axios.delete(`http://localhost:4000/api/v1/item/${id}`).then(response => {
+        axios.delete(`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/item/${id}`).then(response => {
             toast.success("Item deleted Succesfully")
         })
             .catch(error => {
@@ -84,7 +85,6 @@ const ItemList = () => {
                                         <th>Description  </th>
                                         <th>Category</th>
                                         <th>Material</th>
-
                                         <th>Action Edit</th>
                                         <th>Action Delete</th>
                                     </tr>
@@ -94,8 +94,9 @@ const ItemList = () => {
                                         <tr>
                                             <td>{items.Item_Name}</td>
                                             <td>
-                                                <div className='item-img'>
-                                                    {/* <img src={} /> */}
+                                                <div >
+                                                <img className='item-img' src={`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/images/${items.image}`} alt={items.Item_Name} />
+                                                    {/* <td>{items.image}</td> */}
                                                 </div>
                                             </td>
                                             <td>{items.description}</td>

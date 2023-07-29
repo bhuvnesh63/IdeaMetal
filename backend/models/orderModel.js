@@ -2,28 +2,32 @@
 const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema({
-  Table_Number: {
+  name: {
     type: String,
-    required: [true, "Please enter the table number"],
   },
-  Status:{
-    type:String,
-    required:true,
+  email: {
+    type: String,
+  },
 
-  },
+  // phoneNumber: {
+  //   type: Number,
+  // },
   Items: [
     {
-      Item_Name: {
+      itemName: {
         type: String,
 
       },
-      price: {
-        type: Number,
+      material: {
+        type: String,
 
       },
-      Quantity: {
-        type: Number,
+      categoryName: {
+        type: String,
 
+      },
+      quantity: {
+        type: Number,
       },
     },
   ],
