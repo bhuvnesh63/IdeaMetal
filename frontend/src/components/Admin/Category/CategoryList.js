@@ -7,7 +7,7 @@ import Layout from '../../Header/Layout';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const baseURL = " http://localhost:4000/api/v1/categories"
+const baseURL = "http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/categories"
 
 const CategoryList = () => {
 
@@ -18,11 +18,11 @@ const CategoryList = () => {
             setGetAll(response.data);
             // console.log(response)
         })
-    }, [get])
+    }, [])
 
     const deleteData = (id) => {
         // console.log(id)
-        axios.delete(`http://localhost:4000/api/v1/category/${id}`).then(response => {
+        axios.delete(`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/category/${id}`).then(response => {
             toast.success("Category deleted Succesfully")
         })
             .catch(error => {

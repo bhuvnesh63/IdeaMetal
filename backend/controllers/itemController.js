@@ -9,7 +9,10 @@ const multer = require("multer");
 
 
 exports.createItem = (async (req, res, next) => {
-    req.body.image=req.file.filename
+    // req.body.image=req.file.filename
+    if (req.file) {
+        req.body.image = req.file.filename;
+      }
     const item = await Item.create(req.body);
 
     console.log(req.body)
@@ -19,22 +22,6 @@ exports.createItem = (async (req, res, next) => {
     });
 });
 
-// exports.createItem = async (req, res) => {
-//     try {
-//         ({
-//             Item_Name: req.body.Item_Name,
-//             description: req.body.description,
-//             Category_Name: req.body.Category_Name,
-//             material_Name: req.body.material_Name,
-//             image: req.file.filename,
-
-//         }
-//         )
-//     } catch (error) {
-//         res.status(400).send(error.message)
-//     }
-// }
-
 
 exports.getAllitems = async (req, res) => {
 
@@ -42,6 +29,7 @@ exports.getAllitems = async (req, res) => {
     const apiFeature = new ApiFeatures(Item.find(), req.query).search().filter();
 
     const items = await apiFeature.query;
+    
     res.status(200).json({
         success: true,
         items,
@@ -99,7 +87,10 @@ exports.deleteItem = async (req, res, next) => {
 
 
     if (!item) {
-        return next(new ErrorHandler("Item not found ", 404));
+        return res.status(500).json({
+            success: false,
+            message: "Item not Found"
+        });
     }
 
     // ==========================================================================

@@ -19,7 +19,7 @@ const Category = () => {
   const submitform = (event) => {
       event.preventDefault();
       try {
-          axios.post(" http://localhost:4000/api/v1/category/new", {
+          axios.post("http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/category/new", {
 
               "Category_Type": category_Type,
           })

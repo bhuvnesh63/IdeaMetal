@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 
-const baseURL = "http://localhost:4000/api/v1/categories";
-const materialURL = "http://localhost:4000/api/v1/materials";
+const baseURL = "http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/categories";
+const materialURL = "http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/materials";
 
 const EditItem = () => {
 
@@ -33,12 +33,12 @@ const EditItem = () => {
     useEffect(() => {
         axios.get(materialURL).then((response) => {
             setGetmaterial(response.data);
-            console.log(response.data, "pooja")
         });
     }, []);
 
     useEffect(() => {
         axios.get(baseURL).then((response) => {
+            console.log(response.data);
             setGetAll(response.data);
            
         });
@@ -46,21 +46,23 @@ const EditItem = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/api/v1/item/${params.id}`).then((response) => {
+        axios.get(`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/item/${params.id}`).then((response) => {
             setSpecificItem(response.data);
             setItem_Name(response.data.item.Item_Name);
             setDescription(response.data.item.description);
             setCategory_Name(response.data.item.Category_Name);
             setMaterial_Name(response.data.item.material_Name);
+            setCategory_Type(response.data.item.Category_Type);
+            setMaterialType(response.data.item.material_Name);
 
         })
-    }, [])
+    }, [params.id])
 
 
     const submitform = async (event) => {
         event.preventDefault();
         try {
-            await axios.post("http://localhost:4000/api/v1/item/new", {
+            await axios.put(`http://ec2-13-232-144-169.ap-south-1.compute.amazonaws.com:4000/api/v1/item/${params.id}`, {
                 "Item_Name": Item_Name,
                 "description": description,
                 "Category_Name": category_Type,
@@ -146,7 +148,7 @@ const EditItem = () => {
                                 <label className="label">Material Name</label>
                                 <select
                                     className="form-control"
-                                    value={materialType}
+                                    value={material_Name}
                                     onChange={(e) => setMaterialType(e.target.value)}
                                 >
                                     <option value="">Select a Material</option>
@@ -162,6 +164,7 @@ const EditItem = () => {
                                 <label className="label">Category Name</label>
                                 <select
                                     className="form-control"
+                                    value={Category_Name}
                                     onChange={(e) => setCategory_Type(e.target.value)}
                                 >
                                     <option  value={category_Type}>Select a category</option>
